@@ -1,5 +1,5 @@
 // this projecy will be GitHub like Progress Tracker
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Progress {
   progress: number;
@@ -22,6 +22,21 @@ const Tracker = () => {
   ];
 
   // create mock progress data
+
+  const mockProgress = () => {
+    const newProgress = [...progress];
+    for (let i = 0; i < 365; i++) {
+      newProgress.push({
+        progress: Math.floor(Math.random() * 5),
+        date: Date.now(),
+      });
+    }
+    setProgress(newProgress);
+  };
+
+  useEffect(() => {
+    mockProgress();
+  }, []);
   return (
     <div>
       <h1>Tracker</h1>

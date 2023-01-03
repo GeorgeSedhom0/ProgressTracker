@@ -39,3 +39,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.progressSquare {
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  border: 1px solid #fff;
+}
