@@ -1,24 +1,27 @@
 // this projecy will be GitHub like Progress Tracker
 import { useEffect, useState } from "react";
+import { Tooltip } from "@mui/material";
 
 interface Progress {
   progress: number;
   date: number;
+  done: string[];
 }
 const Tracker = () => {
   const [progress, setProgress] = useState<Progress[]>([
     {
       progress: 0,
       date: Date.now(),
+      done: ["mock data"],
     },
   ]);
 
   const colorByProgress = [
-    "darkgray",
-    "gray",
-    "lightgreen",
-    "green",
-    "darkgreen",
+    "#242424",
+    "#2c672c",
+    "#2e782e",
+    "#308930",
+    "#33aa33",
   ];
 
   // create mock progress data
@@ -29,6 +32,7 @@ const Tracker = () => {
       newProgress.push({
         progress: Math.floor(Math.random() * 5),
         date: Date.now(),
+        done: ["mock data"],
       });
     }
     setProgress(newProgress);
@@ -49,13 +53,14 @@ const Tracker = () => {
       >
         {progress.map((item, index) => {
           return (
-            <div
-              key={index}
-              className="progressSquare"
-              style={{
-                backgroundColor: colorByProgress[item.progress],
-              }}
-            ></div>
+            <Tooltip placement="top" title={item.done.join(", ")} key={index}>
+              <div
+                className="progressSquare"
+                style={{
+                  backgroundColor: colorByProgress[item.progress],
+                }}
+              ></div>
+            </Tooltip>
           );
         })}
       </div>

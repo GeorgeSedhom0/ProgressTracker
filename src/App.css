@@ -45,4 +45,12 @@
   height: 20px;
   background-color: #000;
   border: 1px solid #fff;
+  border-radius: 0.25em;
+  margin: 1px;
+  transition: all 0.2s ease-in-out;
+}
+.progressSquare:hover {
+  background-color: #fff;
+  border: 1px solid #000;
+  transition: all 0.2s ease-in-out;
 }
