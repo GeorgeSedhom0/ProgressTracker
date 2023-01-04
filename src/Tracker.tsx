@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 
-interface Progress {
+export interface Progress {
   progress: number;
   date: number;
   done: string[];
@@ -40,6 +40,11 @@ const Tracker = () => {
 
   useEffect(() => {
     mockProgress();
+
+    return () => {
+      // clean up
+      setProgress([]);
+    };
   }, []);
   return (
     <div>
