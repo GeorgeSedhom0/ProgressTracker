@@ -1,11 +1,18 @@
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import { Progress } from "../Tracker";
+import { useState } from "react";
 
-const addProgress: React.FC<{
+const AddProgress: React.FC<{
   setProgress: React.Dispatch<React.SetStateAction<Progress[]>>;
 }> = ({ setProgress }) => {
+  const [newProgress, setNewProgress] = useState(0);
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+      }}
+    >
       <TextField
         id="outlined-number"
         label="Progress"
@@ -25,8 +32,23 @@ const addProgress: React.FC<{
           });
         }}
       />
+      <Button
+        variant="contained"
+        onClick={() => {
+          setProgress((prev) => {
+            prev.push({
+              progress: 0,
+              date: Date.now(),
+              done: ["mock data"],
+            });
+            return prev;
+          });
+        }}
+      >
+        Submit
+      </Button>
     </div>
   );
 };
 
-export default addProgress;
+export default AddProgress;

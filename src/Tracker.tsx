@@ -1,6 +1,7 @@
 // this projecy will be GitHub like Progress Tracker
 import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
+import AddProgress from "./componants/inputProgress";
 
 export interface Progress {
   progress: number;
@@ -56,6 +57,7 @@ const Tracker = () => {
           width: "100%",
         }}
       >
+        <AddProgress setProgress={setProgress} />
         {progress.map((item, index) => {
           return (
             <Tooltip placement="top" title={item.done.join(", ")} key={index}>
