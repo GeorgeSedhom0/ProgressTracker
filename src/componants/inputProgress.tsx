@@ -1,7 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Button, Slider, Divider, Typography, TextField } from "@mui/material/";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Progress } from "../Tracker";
 
 const AddProgress: React.FC<{
@@ -12,15 +12,17 @@ const AddProgress: React.FC<{
   const [add, setAdd] = useState(false);
   const [addedToday, setAddedToday] = useState(false);
 
-  const lastAdded = localStorage.getItem("lastAdded");
+  useEffect(() => {
+    const lastAdded = localStorage.getItem("lastAdded");
 
-  if (lastAdded) {
-    const lastAddedDate = new Date(Number(lastAdded));
-    const today = new Date();
-    if (lastAddedDate.getDate() === today.getDate()) {
-      setAddedToday(true);
+    if (lastAdded) {
+      const lastAddedDate = new Date(Number(lastAdded));
+      const today = new Date();
+      if (lastAddedDate.getDate() === today.getDate()) {
+        setAddedToday(true);
+      }
     }
-  }
+  }, []);
 
   return (
     <div
@@ -147,13 +149,34 @@ const AddProgress: React.FC<{
             variant="contained"
             onClick={() => {
               setProgress((prev) => {
-                const newArr = [...prev];
-                newArr.push({
-                  progress: newProgress,
-                  date: Date.now(),
-                  done: ["mock data"],
+                const today = prev.findIndex((progress) => {
+                  const date = new Date(progress.date);
+                  const today = new Date();
+                  return (
+                    date.getDate() === today.getDate() &&
+                    date.getMonth() === today.getMonth() &&
+                    date.getFullYear() === today.getFullYear()
+                  );
                 });
-                return newArr;
+                const text = progressText.split("\n");
+                console.log(today);
+                if (today > -1) {
+                  prev[today].progress = newProgress;
+                  prev[today].done = text;
+                } else {
+                  prev.push({
+                    date: new Date().getTime(),
+                    progress: newProgress,
+                    done: text,
+                  });
+                }
+                localStorage.setItem(
+                  "lastAdded",
+                  new Date().getTime().toString()
+                );
+                localStorage.setItem("progress", JSON.stringify(prev));
+                setAdd(false);
+                return prev;
               });
             }}
           >

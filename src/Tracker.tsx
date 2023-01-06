@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 import AddProgress from "./componants/inputProgress";
+import { Divider } from "@mui/material/";
 
 export interface Progress {
   progress: number;
@@ -9,13 +10,9 @@ export interface Progress {
   done: string[];
 }
 const Tracker = () => {
-  const [progress, setProgress] = useState<Progress[]>([
-    {
-      progress: 0,
-      date: Date.now(),
-      done: ["mock data"],
-    },
-  ]);
+  const [progress, setProgress] = useState<Progress[]>([]);
+
+  console.log(progress);
 
   const colorByProgress = [
     "#242424",
@@ -28,7 +25,7 @@ const Tracker = () => {
   // create mock progress data
 
   const mockProgress = () => {
-    const newProgress = [...progress];
+    const newProgress = [];
     const yearAgo = new Date();
     yearAgo.setDate(yearAgo.getDate() - 365);
 
@@ -38,17 +35,20 @@ const Tracker = () => {
       newProgress.push({
         progress: 0,
         date: yearAgo.getTime(),
-        done: ["- None"],
+        done: [],
       });
     }
     setProgress(newProgress);
+    return newProgress;
   };
 
   useEffect(() => {
     // get the saved data from localStoarge
     const savedData = localStorage.getItem("progress");
     if (!savedData) {
-      mockProgress();
+      console.log("no data");
+      const initProgress = mockProgress();
+      localStorage.setItem("progress", JSON.stringify(initProgress));
     } else {
       setProgress(JSON.parse(savedData));
     }
@@ -69,9 +69,31 @@ const Tracker = () => {
         }}
       >
         <AddProgress setProgress={setProgress} />
-        {progress.map((item, index) => {
+        {progress.map((item: Progress, index: number) => {
+          const dateTitle = new Date(item.date).toLocaleDateString();
+          const Title = () => {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "1px",
+                }}
+              >
+                <span>{dateTitle}</span>
+                {item.done.map((item: string, index: number) => (
+                  <div key={index}>
+                    <Divider />
+                    <span>{item} </span>
+                  </div>
+                ))}
+              </div>
+            );
+          };
           return (
-            <Tooltip placement="top" title={item.done.join(", ")} key={index}>
+            <Tooltip placement="top" title={<Title />} key={index}>
               <div
                 className="progressSquare"
                 style={{
