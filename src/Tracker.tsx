@@ -12,8 +12,6 @@ export interface Progress {
 const Tracker = () => {
   const [progress, setProgress] = useState<Progress[]>([]);
 
-  console.log(progress);
-
   const colorByProgress = [
     "#242424",
     "#2c672c",
@@ -92,12 +90,13 @@ const Tracker = () => {
               </div>
             );
           };
+          const color = colorByProgress[item.progress];
           return (
             <Tooltip placement="top" title={<Title />} key={index}>
               <div
                 className="progressSquare"
                 style={{
-                  backgroundColor: colorByProgress[item.progress],
+                  backgroundColor: color,
                 }}
               ></div>
             </Tooltip>

@@ -18,7 +18,11 @@ const AddProgress: React.FC<{
     if (lastAdded) {
       const lastAddedDate = new Date(Number(lastAdded));
       const today = new Date();
-      if (lastAddedDate.getDate() === today.getDate()) {
+      if (
+        lastAddedDate.getDate() === today.getDate() &&
+        lastAddedDate.getMonth() === today.getMonth() &&
+        lastAddedDate.getFullYear() === today.getFullYear()
+      ) {
         setAddedToday(true);
       }
     }
@@ -176,6 +180,7 @@ const AddProgress: React.FC<{
                 );
                 localStorage.setItem("progress", JSON.stringify(prev));
                 setAdd(false);
+                setAddedToday(true);
                 return prev;
               });
             }}
