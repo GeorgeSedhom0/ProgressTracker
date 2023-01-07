@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 import AddProgress from "./componants/inputProgress";
 import { Divider } from "@mui/material/";
+import ImportExport from "./componants/ImportExport";
 
 export interface Progress {
   progress: number;
@@ -58,6 +59,7 @@ const Tracker = () => {
 
   return (
     <div>
+      <ImportExport />
       <h1>Tracker</h1>
       <div
         style={{
