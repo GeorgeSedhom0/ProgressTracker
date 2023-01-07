@@ -20,3 +20,10 @@
     - make a pull request
 
 ### i really feel like this could be a nice web app so if you need to use it feel free to do so
+
+
+### usage
+
+- Just press on the add progress button once everyday
+- you can see what you did by hovering over the squares
+- you can backup and restore your progress by clicking on the backup adn restore button
