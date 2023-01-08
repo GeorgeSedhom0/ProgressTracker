@@ -27,3 +27,4 @@
 - Just press on the add progress button once everyday
 - you can see what you did by hovering over the squares
 - you can backup and restore your progress by clicking on the backup adn restore button
+- Select any year to see your progress from that year
