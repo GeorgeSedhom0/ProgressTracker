@@ -41,8 +41,8 @@
 }
 
 .progressSquare {
-  width: 20px;
-  height: 20px;
+  width: 2%;
+  aspect-ratio: 1/1;
   background-color: #000;
   border: 1px solid #fff;
   border-radius: 0.25em;
