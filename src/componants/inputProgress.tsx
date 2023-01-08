@@ -153,7 +153,8 @@ const AddProgress: React.FC<{
             variant="contained"
             onClick={() => {
               setProgress((prev) => {
-                const today = prev.findIndex((progress) => {
+                const newValue = [...prev];
+                const today = newValue.findIndex((progress) => {
                   const date = new Date(progress.date);
                   const today = new Date();
                   return (
@@ -165,10 +166,10 @@ const AddProgress: React.FC<{
                 const text = progressText.split("\n");
                 console.log(today);
                 if (today > -1) {
-                  prev[today].progress = newProgress;
-                  prev[today].done = text;
+                  newValue[today].progress = newProgress;
+                  newValue[today].done = text;
                 } else {
-                  prev.push({
+                  newValue.push({
                     date: new Date().getTime(),
                     progress: newProgress,
                     done: text,
@@ -178,10 +179,10 @@ const AddProgress: React.FC<{
                   "lastAdded",
                   new Date().getTime().toString()
                 );
-                localStorage.setItem("progress", JSON.stringify(prev));
+                localStorage.setItem("progress", JSON.stringify(newValue));
                 setAdd(false);
                 setAddedToday(true);
-                return prev;
+                return newValue;
               });
             }}
           >

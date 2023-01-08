@@ -30,7 +30,6 @@ const Tracker = () => {
     // make it 1/1 of the current year
     yearStart.setMonth(0);
     yearStart.setDate(1);
-
     for (let i = 0; i < 365; i++) {
       fullYear.push({
         progress: 0,
