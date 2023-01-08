@@ -13,7 +13,7 @@ export interface Progress {
 
 const Tracker = () => {
   const [progress, setProgress] = useState<Progress[]>([]);
-  const [selectedYear, setSelectedYear] = useState<string>("2022");
+  const [selectedYear, setSelectedYear] = useState<string>("Leatest 365 Days");
 
   const allPossibleYears: string[] = [];
   progress.forEach((item) => {
@@ -23,10 +23,42 @@ const Tracker = () => {
     }
   });
 
-  const currentYearProgress = progress.filter((item) => {
-    const year = new Date(item.date).getFullYear() as unknown as string;
-    return year === selectedYear;
-  });
+  const filler = (progress: Progress[]) => {
+    if (progress.length >= 365) return progress;
+    const fullYear = [];
+    const yearStart = new Date();
+    // make it 1/1 of the current year
+    yearStart.setMonth(0);
+    yearStart.setDate(1);
+
+    for (let i = 0; i < 365; i++) {
+      fullYear.push({
+        progress: 0,
+        date: yearStart.getTime(),
+        done: [],
+      });
+      yearStart.setDate(yearStart.getDate() + 1);
+    }
+    fullYear.forEach((item, index) => {
+      if (progress[index]) {
+        fullYear[index] = progress[index];
+      }
+    });
+    return fullYear;
+  };
+
+  const currentYearProgress = filler(
+    progress.filter((item) => {
+      if (selectedYear === "Leatest 365 Days") {
+        // return latest 365 days
+        const yearAgo = new Date();
+        yearAgo.setDate(yearAgo.getDate() - 365);
+        return item.date > yearAgo.getTime();
+      }
+      const year = new Date(item.date).getFullYear() as unknown as string;
+      return year === selectedYear;
+    })
+  );
 
   const colorByProgress = [
     "#242424",
@@ -35,23 +67,6 @@ const Tracker = () => {
     "#308930",
     "#33aa33",
   ];
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  // create mock progress data
 
   const mockProgress = () => {
     const newProgress = [];
@@ -108,11 +123,12 @@ const Tracker = () => {
           }}
         >
           <Select
-            defaultValue={selectedYear}
+            value={selectedYear}
             onChange={(e) => {
               setSelectedYear(e.target.value);
             }}
           >
+            <MenuItem value="Leatest 365 Days">All Years</MenuItem>
             {allPossibleYears.map((item) => (
               <MenuItem key={item} value={item}>
                 {item}
@@ -125,53 +141,46 @@ const Tracker = () => {
           style={{
             width: "100%",
             display: "flex",
+            flexWrap: "wrap",
             margin: "1em 0",
           }}
         >
-          {months.map((item, index) => {
+          {currentYearProgress.map((item: Progress, index: number) => {
+            const dateTitle = new Date(item.date).toLocaleDateString();
+            const Title = () => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <span>{dateTitle}</span>
+                  {item.done.map((item: string, index: number) => (
+                    <div key={index}>
+                      <Divider />
+                      <span>{item} </span>
+                    </div>
+                  ))}
+                </div>
+              );
+            };
+            const color = colorByProgress[item.progress];
             return (
-              <div key={index} style={{ width: "8.3%", textAlign: "center" }}>
-                {item}
-              </div>
+              <Tooltip placement="top" title={<Title />} key={index}>
+                <div
+                  className="progressSquare"
+                  style={{
+                    backgroundColor: color,
+                  }}
+                ></div>
+              </Tooltip>
             );
           })}
         </div>
-
-        {currentYearProgress.map((item: Progress, index: number) => {
-          const dateTitle = new Date(item.date).toLocaleDateString();
-          const Title = () => {
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "1px",
-                }}
-              >
-                <span>{dateTitle}</span>
-                {item.done.map((item: string, index: number) => (
-                  <div key={index}>
-                    <Divider />
-                    <span>{item} </span>
-                  </div>
-                ))}
-              </div>
-            );
-          };
-          const color = colorByProgress[item.progress];
-          return (
-            <Tooltip placement="top" title={<Title />} key={index}>
-              <div
-                className="progressSquare"
-                style={{
-                  backgroundColor: color,
-                }}
-              ></div>
-            </Tooltip>
-          );
-        })}
       </div>
     </div>
   );
