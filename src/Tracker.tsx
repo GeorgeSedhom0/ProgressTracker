@@ -5,6 +5,7 @@ import AddProgress from "./componants/inputProgress";
 import { Divider } from "@mui/material/";
 import ImportExport from "./componants/ImportExport";
 import MobileSquar from "./componants/mobileSquar";
+import { display } from "@mui/system";
 
 export interface Progress {
   progress: number;
@@ -105,7 +106,6 @@ const Tracker = () => {
   const isMobile = window.innerWidth < 500;
   return (
     <div>
-      <ImportExport />
       <h1>Tracker</h1>
       <div
         style={{
@@ -114,7 +114,21 @@ const Tracker = () => {
           width: "100%",
         }}
       >
-        <AddProgress setProgress={setProgress} />
+        <div
+          style={{
+            position: "absolute",
+            top: "1em",
+            left: "1em",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1em",
+            width: "calc(100% - 2em)",
+            justifyContent: "space-between",
+          }}
+        >
+          <ImportExport />
+          <AddProgress setProgress={setProgress} />
+        </div>
         <div
           style={{
             width: "100%",
