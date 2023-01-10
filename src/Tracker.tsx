@@ -1,9 +1,10 @@
 // this projecy will be GitHub like Progress Tracker
 import { useEffect, useState } from "react";
-import { Tooltip, Select, MenuItem } from "@mui/material";
+import { Tooltip, Select, MenuItem, Dialog } from "@mui/material";
 import AddProgress from "./componants/inputProgress";
 import { Divider } from "@mui/material/";
 import ImportExport from "./componants/ImportExport";
+import MobileSquar from "./componants/mobileSquar";
 
 export interface Progress {
   progress: number;
@@ -101,6 +102,7 @@ const Tracker = () => {
     };
   }, []);
 
+  const isMobile = window.innerWidth < 500;
   return (
     <div>
       <ImportExport />
@@ -168,16 +170,20 @@ const Tracker = () => {
               );
             };
             const color = colorByProgress[item.progress];
-            return (
-              <Tooltip placement="top" title={<Title />} key={index}>
-                <div
-                  className="progressSquare"
-                  style={{
-                    backgroundColor: color,
-                  }}
-                ></div>
-              </Tooltip>
-            );
+            if (!isMobile) {
+              return (
+                <Tooltip placement="top" title={<Title />} key={index}>
+                  <div
+                    className="progressSquare"
+                    style={{
+                      backgroundColor: color,
+                    }}
+                  ></div>
+                </Tooltip>
+              );
+            } else {
+              return <MobileSquar color={color} Title={Title} />;
+            }
           })}
         </div>
       </div>
