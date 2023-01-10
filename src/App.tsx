@@ -3,6 +3,8 @@ import "./App.css";
 import Tracker from "./Tracker";
 // imports for theme on mui
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Settings from "./componants/Settings";
 
 const theme = createTheme({
   palette: {
@@ -33,7 +35,13 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Tracker />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Tracker />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<h1>404</h1>} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

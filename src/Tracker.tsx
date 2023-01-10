@@ -1,11 +1,12 @@
 // this projecy will be GitHub like Progress Tracker
 import { useEffect, useState } from "react";
-import { Tooltip, Select, MenuItem, Dialog } from "@mui/material";
+import { Tooltip, Select, MenuItem, Dialog, IconButton } from "@mui/material";
 import AddProgress from "./componants/inputProgress";
 import { Divider } from "@mui/material/";
 import ImportExport from "./componants/ImportExport";
 import MobileSquar from "./componants/mobileSquar";
-import { display } from "@mui/system";
+import { Link } from "react-router-dom";
+import { Settings } from "@mui/icons-material";
 
 export interface Progress {
   progress: number;
@@ -69,6 +70,16 @@ const Tracker = () => {
     "#33aa33",
   ];
 
+  const customColors = localStorage.getItem("customColors");
+  if (customColors) {
+    const colors = JSON.parse(customColors);
+    colors.forEach((item: string, index: number) => {
+      colorByProgress[index] = item;
+    });
+  } else {
+    localStorage.setItem("customColors", JSON.stringify(colorByProgress));
+  }
+
   const mockProgress = () => {
     const newProgress = [];
     const yearAgo = new Date();
@@ -127,7 +138,23 @@ const Tracker = () => {
           }}
         >
           <ImportExport />
-          <AddProgress setProgress={setProgress} />
+          <div
+            style={{
+              display: "flex",
+              gap: "1em",
+            }}
+          >
+            <AddProgress setProgress={setProgress} />
+            <Link to="/settings">
+              <IconButton>
+                <Settings
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              </IconButton>
+            </Link>
+          </div>
         </div>
         <div
           style={{
