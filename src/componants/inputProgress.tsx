@@ -27,13 +27,15 @@ const AddProgress: React.FC<{
       }
     }
   }, []);
+  const isMobile = window.innerWidth < 500;
 
   return (
     <div
       style={{
         position: "absolute",
-        top: "1em",
-        right: "1em",
+        top: isMobile ? "4em" : "1em",
+        right: isMobile ? "none" : "1em",
+        left: isMobile ? "1em" : "none",
         display: "flex",
       }}
     >
