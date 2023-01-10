@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Gradient } from "javascript-color-gradient";
+import Gradient from "javascript-color-gradient";
 
 const Settings = () => {
   const [bestPerformanceColor, setBestPerformanceColor] =
@@ -14,9 +14,9 @@ const Settings = () => {
       setWorstPerformanceColor(JSON.parse(customColors)[4]);
     } else {
       const gradient = new Gradient();
-      gradient.setGradient(bestPerformanceColor, worstPerformanceColor);
+      gradient.setColorGradient(bestPerformanceColor, worstPerformanceColor);
       gradient.setMidpoint(4);
-      const colors = gradient.getArray();
+      const colors = gradient.getColors();
       localStorage.setItem("customColors", JSON.stringify(colors));
     }
   }, []);
