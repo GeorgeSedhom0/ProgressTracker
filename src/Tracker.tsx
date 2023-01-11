@@ -116,116 +116,124 @@ const Tracker = () => {
 
   const isMobile = window.innerWidth < 500;
   return (
-    <div>
-      <h1>Tracker</h1>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "100%",
-        }}
-      >
+    <div
+      style={{
+        display: "flex",
+        placeItems: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <div>
+        <h1>Tracker</h1>
         <div
           style={{
-            position: "absolute",
-            top: "1em",
-            left: "1em",
             display: "flex",
             flexWrap: "wrap",
-            gap: "1em",
-            width: "calc(100% - 2em)",
-            justifyContent: "space-between",
+            width: "100%",
           }}
         >
-          <ImportExport />
           <div
             style={{
+              position: "absolute",
+              top: "1em",
+              left: "1em",
               display: "flex",
+              flexWrap: "wrap",
               gap: "1em",
+              width: "calc(100% - 2em)",
+              justifyContent: "space-between",
             }}
           >
-            <AddProgress setProgress={setProgress} />
-            <Link to="/settings">
-              <IconButton>
-                <Settings
-                  sx={{
-                    color: "white",
-                  }}
-                />
-              </IconButton>
-            </Link>
-          </div>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-end",
-            margin: "1em 0",
-          }}
-        >
-          <Select
-            value={selectedYear}
-            onChange={(e) => {
-              setSelectedYear(e.target.value);
-            }}
-          >
-            <MenuItem value="Leatest 365 Days">All Years</MenuItem>
-            {allPossibleYears.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </div>
-
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            margin: "1em 0",
-          }}
-        >
-          {currentYearProgress.map((item: Progress, index: number) => {
-            const dateTitle = new Date(item.date).toLocaleDateString();
-            const Title = () => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "1px",
-                  }}
-                >
-                  <span>{dateTitle}</span>
-                  {item.done.map((item: string, index: number) => (
-                    <div key={index}>
-                      <Divider />
-                      <span>{item} </span>
-                    </div>
-                  ))}
-                </div>
-              );
-            };
-            const color = colorByProgress[item.progress];
-            if (!isMobile) {
-              return (
-                <Tooltip placement="top" title={<Title />} key={index}>
-                  <div
-                    className="progressSquare"
-                    style={{
-                      backgroundColor: color,
+            <ImportExport />
+            <div
+              style={{
+                display: "flex",
+                gap: "1em",
+              }}
+            >
+              <AddProgress setProgress={setProgress} />
+              <Link to="/settings">
+                <IconButton>
+                  <Settings
+                    sx={{
+                      color: "white",
                     }}
-                  ></div>
-                </Tooltip>
-              );
-            } else {
-              return <MobileSquar color={color} Title={Title} />;
-            }
-          })}
+                  />
+                </IconButton>
+              </Link>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              margin: "1em 0",
+            }}
+          >
+            <Select
+              value={selectedYear}
+              onChange={(e) => {
+                setSelectedYear(e.target.value);
+              }}
+            >
+              <MenuItem value="Leatest 365 Days">All Years</MenuItem>
+              {allPossibleYears.map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexWrap: "wrap",
+              margin: "1em 0",
+            }}
+          >
+            {currentYearProgress.map((item: Progress, index: number) => {
+              const dateTitle = new Date(item.date).toLocaleDateString();
+              const Title = () => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "1px",
+                    }}
+                  >
+                    <span>{dateTitle}</span>
+                    {item.done.map((item: string, index: number) => (
+                      <div key={index}>
+                        <Divider />
+                        <span>{item} </span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              };
+              const color = colorByProgress[item.progress];
+              if (!isMobile) {
+                return (
+                  <Tooltip placement="top" title={<Title />} key={index}>
+                    <div
+                      className="progressSquare"
+                      style={{
+                        backgroundColor: color,
+                      }}
+                    ></div>
+                  </Tooltip>
+                );
+              } else {
+                return <MobileSquar color={color} Title={Title} />;
+              }
+            })}
+          </div>
         </div>
       </div>
     </div>
