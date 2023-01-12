@@ -1,10 +1,10 @@
 import { blue, purple } from "@mui/material/colors";
 import "./App.css";
-import Tracker from "./Tracker";
+import Tracker from "./pages/Tracker";
 // imports for theme on mui
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Settings from "./componants/Settings";
+import Settings from "./pages/Settings";
 
 const theme = createTheme({
   palette: {

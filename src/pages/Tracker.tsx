@@ -1,10 +1,10 @@
 // this projecy will be GitHub like Progress Tracker
 import { useEffect, useState } from "react";
 import { Tooltip, Select, MenuItem, Dialog, IconButton } from "@mui/material";
-import AddProgress from "./componants/inputProgress";
+import AddProgress from "../componants/inputProgress";
 import { Divider } from "@mui/material/";
-import ImportExport from "./componants/ImportExport";
-import MobileSquar from "./componants/mobileSquar";
+import ImportExport from "../componants/ImportExport";
+import MobileSquar from "../componants/mobileSquar";
 import { Link } from "react-router-dom";
 import { Settings } from "@mui/icons-material";
 
@@ -18,6 +18,7 @@ const Tracker = () => {
   const [progress, setProgress] = useState<Progress[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("Leatest 365 Days");
 
+  const name = localStorage.getItem("customName") || "";
   const allPossibleYears: string[] = [];
   progress.forEach((item) => {
     const year = new Date(item.date).getFullYear() as unknown as string;
@@ -125,6 +126,7 @@ const Tracker = () => {
     >
       <div>
         <h1>Tracker</h1>
+        <h4>Welcome back {name}, Are you ready to make some progress today</h4>
         <div
           style={{
             display: "flex",

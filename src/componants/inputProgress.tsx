@@ -2,7 +2,7 @@ import { Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { Button, Slider, Divider, Typography, TextField } from "@mui/material/";
 import { useState, useEffect } from "react";
-import { Progress } from "../Tracker";
+import { Progress } from "../pages/Tracker";
 
 const AddProgress: React.FC<{
   setProgress: React.Dispatch<React.SetStateAction<Progress[]>>;

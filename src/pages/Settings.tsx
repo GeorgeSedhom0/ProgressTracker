@@ -120,6 +120,11 @@ const Settings = () => {
       <Button
         variant="contained"
         onClick={() => {
+          // alert to make sure the user wants to reset
+          const answer = confirm(
+            "All Data will RESET to the default values\nAre you sure you want to reset?"
+          );
+          if (!answer) return;
           // reset
           saveToLocal("#33aa33", "#242424", "");
           setBestPerformanceColor("#33aa33");
